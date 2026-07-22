@@ -15,6 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/renderers/CSS3DRenderer.js"></script>
     
+    <!-- Custom CSS Styles -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;600;800&display=swap');
         
@@ -99,49 +100,30 @@
     <div id="container"></div>
     <div id="css3d-container"></div>
 
-    <!-- Floating Controls & Virtual Keyboard Toggle -->
-    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 pointer-events-auto">
-        
-        <!-- Virtual Keyboard Drawer -->
-        <div id="virtualKeyboard" class="hidden glass-panel p-3 rounded-2xl shadow-2xl border border-white/15 max-w-xl w-full">
-            <div class="flex items-center justify-between pb-2 mb-2 border-b border-white/10 text-xs text-gray-300 font-medium px-1">
-                <span><i class="fa-solid fa-keyboard text-blue-400 mr-1.5"></i> 가상 키보드 (마인크래프트 조작용 WASD / 숫자 / 점프)</span>
-                <span class="text-gray-500">버튼 클릭 시 입력 전달</span>
-            </div>
-            <div id="kbKeys"></div>
+    <!-- Minimal Floating Bottom Center Controls (As requested in reference image) -->
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-20 glass-panel px-5 py-2.5 rounded-2xl flex items-center gap-5 shadow-2xl pointer-events-auto">
+        <!-- View Presets -->
+        <div class="flex items-center gap-2 text-xs text-gray-400 pr-4 border-r border-gray-700/50">
+            <span class="font-medium mr-1">시점:</span>
+            <button data-view="default" class="btn-view active bg-blue-600 text-white px-3 py-1.5 rounded-xl transition font-medium shadow-md shadow-blue-600/30">데스크전체</button>
+            <button data-view="screen" class="btn-view bg-transparent hover:bg-gray-800/60 text-gray-400 hover:text-gray-200 px-3 py-1.5 rounded-xl transition font-medium">화면집중</button>
+            <button data-view="pc" class="btn-view bg-transparent hover:bg-gray-800/60 text-gray-400 hover:text-gray-200 px-3 py-1.5 rounded-xl transition font-medium">PC본체</button>
         </div>
 
-        <!-- Main Toolbar -->
-        <div class="glass-panel px-5 py-2.5 rounded-2xl flex items-center gap-5 shadow-2xl">
-            <!-- View Presets -->
-            <div class="flex items-center gap-2 text-xs text-gray-400 pr-4 border-r border-gray-700/50">
-                <span class="font-medium mr-1">시점:</span>
-                <button data-view="default" class="btn-view active bg-blue-600 text-white px-3 py-1.5 rounded-xl transition font-medium shadow-md shadow-blue-600/30">데스크전체</button>
-                <button data-view="screen" class="btn-view bg-transparent hover:bg-gray-800/60 text-gray-400 hover:text-gray-200 px-3 py-1.5 rounded-xl transition font-medium">화면집중</button>
-                <button data-view="pc" class="btn-view bg-transparent hover:bg-gray-800/60 text-gray-400 hover:text-gray-200 px-3 py-1.5 rounded-xl transition font-medium">PC본체</button>
-            </div>
-
-            <!-- RGB Lighting Theme Selector -->
-            <div class="flex items-center gap-2.5 pr-4 border-r border-gray-700/50">
-                <span class="text-xs text-gray-400 font-medium mr-1">조명:</span>
-                <button data-theme="cyber" class="w-5 h-5 rounded-full bg-gradient-to-tr from-pink-500 to-cyan-400 ring-2 ring-white/20 hover:scale-110 transition shadow-md"></button>
-                <button data-theme="neon" class="w-5 h-5 rounded-full bg-gradient-to-tr from-purple-600 to-blue-500 ring-2 ring-white/20 hover:scale-110 transition shadow-md"></button>
-                <button data-theme="warm" class="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-500 to-orange-400 ring-2 ring-white/20 hover:scale-110 transition shadow-md"></button>
-                <button data-theme="dark" class="w-5 h-5 rounded-full bg-gradient-to-tr from-slate-700 to-slate-900 ring-2 ring-white/20 hover:scale-110 transition shadow-md"></button>
-            </div>
-
-            <!-- Toggle Screen Interact / Virtual Keyboard -->
-            <div class="flex items-center gap-2">
-                <button id="btnToggleKeyboard" class="glass-panel px-3 py-1.5 rounded-xl text-gray-300 hover:text-white text-xs font-medium transition flex items-center gap-1.5 hover:border-blue-500/50">
-                    <i class="fa-solid fa-keyboard text-purple-400"></i>
-                    <span>키보드</span>
-                </button>
-                <button id="btnToggleInteract" class="glass-panel px-3 py-1.5 rounded-xl text-gray-200 hover:text-white text-xs font-medium transition flex items-center gap-2 hover:border-blue-500/50">
-                    <i class="fa-solid fa-computer-mouse text-blue-400"></i>
-                    <span id="interactStatus">화면조작</span>
-                </button>
-            </div>
+        <!-- RGB Lighting Theme Selector -->
+        <div class="flex items-center gap-2.5 pr-4 border-r border-gray-700/50">
+            <span class="text-xs text-gray-400 font-medium mr-1">조명:</span>
+            <button data-theme="cyber" class="w-5 h-5 rounded-full bg-gradient-to-tr from-pink-500 to-cyan-400 ring-2 ring-white/20 hover:scale-110 transition shadow-md"></button>
+            <button data-theme="neon" class="w-5 h-5 rounded-full bg-gradient-to-tr from-purple-600 to-blue-500 ring-2 ring-white/20 hover:scale-110 transition shadow-md"></button>
+            <button data-theme="warm" class="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-500 to-orange-400 ring-2 ring-white/20 hover:scale-110 transition shadow-md"></button>
+            <button data-theme="dark" class="w-5 h-5 rounded-full bg-gradient-to-tr from-slate-700 to-slate-900 ring-2 ring-white/20 hover:scale-110 transition shadow-md"></button>
         </div>
+
+        <!-- Toggle Screen Interact / Camera Orbit -->
+        <button id="btnToggleInteract" class="glass-panel px-3 py-1.5 rounded-xl text-gray-200 hover:text-white text-xs font-medium transition flex items-center gap-2 hover:border-blue-500/50">
+            <i class="fa-solid fa-computer-mouse text-blue-400"></i>
+            <span id="interactStatus">화면조작</span>
+        </button>
     </div>
 
     <!-- Toast Notification -->
@@ -150,124 +132,15 @@
         <span id="toastMsg">메시지</span>
     </div>
 
-    <!-- Fullscreen Typing Practice Overlay (Activated via Left Shift + Enter) -->
-    <div id="typingModal" class="fixed inset-0 z-50 hidden bg-slate-950/95 backdrop-blur-2xl flex flex-col justify-between p-6 md:p-10 text-white select-none transition-all duration-300">
-        <!-- Top Bar -->
-        <div class="flex items-center justify-between max-w-4xl w-full mx-auto pb-4 border-b border-slate-800">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 font-bold text-lg">
-                    <i class="fa-solid fa-keyboard"></i>
-                </div>
-                <div>
-                    <h2 class="text-xl font-extrabold text-white tracking-wide">타자 연습 (Typing Practice)</h2>
-                    <p class="text-xs text-slate-400">L-Shift + Enter 를 누르면 복귀합니다.</p>
-                </div>
-            </div>
-            
-            <div class="flex items-center gap-3">
-                <span class="px-3 py-1.5 rounded-lg bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-semibold flex items-center gap-1.5">
-                    <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[10px]">Left Shift</kbd> + <kbd class="px-1.5 py-0.5 bg-slate-800 border border-slate-700 rounded text-[10px]">Enter</kbd> 토글
-                </span>
-                <button id="btnCloseTyping" class="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition flex items-center justify-center text-sm">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Main Typing Area -->
-        <div class="max-w-3xl w-full mx-auto my-auto py-8 flex flex-col items-center">
-            <!-- Language / Mode Selector -->
-            <div class="flex gap-2 mb-8 bg-slate-900/80 p-1.5 rounded-xl border border-slate-800">
-                <button id="btnLangKr" class="px-4 py-2 rounded-lg text-xs font-bold transition bg-blue-600 text-white shadow-lg shadow-blue-600/30">한글 문장</button>
-                <button id="btnLangEn" class="px-4 py-2 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800">English Sentence</button>
-            </div>
-
-            <!-- Target Text Card -->
-            <div class="w-full bg-slate-900/90 rounded-2xl p-6 border border-slate-800/80 shadow-2xl mb-6 relative overflow-hidden">
-                <div class="text-xs text-slate-400 mb-2 font-mono flex justify-between">
-                    <span>원문 문장</span>
-                    <span id="typingProgress" class="text-blue-400 font-semibold">1 / 10</span>
-                </div>
-                <div id="targetDisplay" class="text-xl md:text-2xl font-medium tracking-wide leading-relaxed min-h-[70px] flex flex-wrap items-center text-slate-400 font-mono">
-                    <!-- Dynamic rendering -->
-                </div>
-            </div>
-
-            <!-- Typing Input Field -->
-            <div class="w-full relative mb-8">
-                <input type="text" id="typingInput" autocomplete="off" spellcheck="false" placeholder="위 문장을 그대로 따라 입력하세요..." 
-                       class="w-full px-6 py-4 bg-slate-900 border-2 border-blue-500/50 focus:border-blue-500 rounded-2xl text-lg md:text-xl text-white outline-none shadow-xl transition-all font-mono" />
-                <button id="btnNextSentence" class="absolute right-3 top-1/2 -translate-y-1/2 px-4 py-2 bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 rounded-xl transition border border-slate-700 flex items-center gap-1.5">
-                    <span>다음</span>
-                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
-                </button>
-            </div>
-
-            <!-- Realtime Stats Dashboard -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 w-full">
-                <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800/80 text-center">
-                    <div class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold mb-1">현재 타수 (CPM)</div>
-                    <div id="statCPM" class="text-2xl font-extrabold text-blue-400">0</div>
-                </div>
-                <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800/80 text-center">
-                    <div class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold mb-1">정확도 (Accuracy)</div>
-                    <div id="statAccuracy" class="text-2xl font-extrabold text-emerald-400">100%</div>
-                </div>
-                <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800/80 text-center">
-                    <div class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold mb-1">최고 타수</div>
-                    <div id="statMaxCPM" class="text-2xl font-extrabold text-purple-400">0</div>
-                </div>
-                <div class="bg-slate-900/80 p-4 rounded-xl border border-slate-800/80 text-center">
-                    <div class="text-[11px] text-slate-400 uppercase tracking-wider font-semibold mb-1">완료 문장</div>
-                    <div id="statCompleted" class="text-2xl font-extrabold text-amber-400">0</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer Notice -->
-        <div class="text-center text-xs text-slate-500 pt-4 border-t border-slate-800/50">
-            💡 단축키 <span class="text-slate-300 font-semibold">Left Shift + Enter</span>를 누르면 타자 연습 창을 닫고 3D 마인크래프트 화면으로 돌아갑니다.
-        </div>
-    </div>
-
+    <!-- JavaScript Logic -->
     <script>
         let scene, cssScene, camera, webglRenderer, cssRenderer, controls;
         let cssObject;
         let rgbLight, pcGlowLight, ambientLight;
         let fanGroups = [];
         let isInteractMode = false;
-        
-        // Typing Practice State Variables
-        let isLeftShiftPressed = false;
-        let isTypingPracticeActive = false;
-        let currentLang = 'kr';
-        let sentenceIndex = 0;
-        let startTime = null;
-        let completedSentencesCount = 0;
-        let maxCPM = 0;
 
-        const sentencesKR = [
-            "동해 물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세",
-            "마인크래프트 3D 워크스페이스에 오신 것을 환영합니다",
-            "꿈을 계속 간직하고 있으면 언젠가 반드시 실현할 때가 온다",
-            "지금 공부하지 않으면 나중에 더 많은 고생을 하게 된다",
-            "성공은 거절을 당하지 않고 승리하는 것이 아니라 실패에 굴하지 않는 것이다",
-            "하늘은 스스로 돕는 자를 돕는 법이다",
-            "시작이 반이다 첫 걸음을 내딛는 순간 이미 변화는 시작되었다",
-            "코딩은 단순한 기술이 아니라 생각을 현실로 만드는 도구이다",
-            "마인크래프트 세계에서 당신만의 무언가를 구축해 보세요"
-        ];
-
-        const sentencesEN = [
-            "The quick brown fox jumps over the lazy dog.",
-            "Welcome to the 3D Minecraft Web Browser Experience.",
-            "Stay hungry, stay foolish and keep pushing your limits.",
-            "JavaScript is a versatile programming language for web developers.",
-            "Practice makes perfect in every skills you want to master.",
-            "Consistency and continuous effort lead to remarkable success.",
-            "Never stop learning because life never stops teaching."
-        ];
-
+        // Updated initial zoom: closer camera position and tighter target
         const cameraPresets = {
             default: { pos: new THREE.Vector3(0, 0.9, 2.3), target: new THREE.Vector3(0, 0.45, 0) },
             screen: { pos: new THREE.Vector3(0, 0.45, 1.45), target: new THREE.Vector3(0, 0.45, 0) },
@@ -286,8 +159,6 @@
             setupLighting();
             setupUIEventListeners();
             setupVirtualKeyboard();
-            setupTypingPracticeEngine();
-            setupShortcutListeners();
             
             animate();
         };
@@ -386,23 +257,25 @@
             // Create home browser launcher inside monitor screen
             const iframeElementWrapper = document.createElement('div');
             iframeElementWrapper.className = 'iframe-container screen-interactive';
-            
-            const initialScreenHTML = 
-                '<div style="width:100%; height:100%; background:#090d16; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; font-family:sans-serif;">' +
-                    '<div style="background:rgba(22, 27, 38, 0.9); padding:40px; border-radius:16px; border:1px solid rgba(255,255,255,0.1); width:520px; box-shadow:0 20px 40px rgba(0,0,0,0.6); text-align:center;">' +
-                        '<div style="width:64px; height:64px; background:#2563eb; border-radius:14px; margin:0 auto 20px; display:flex; align-items:center; justify-content:center; font-size:28px; font-weight:bold; box-shadow:0 10px 20px rgba(37,99,235,0.4);">' +
-                            'M' +
-                        '</div>' +
-                        '<h2 style="font-size:22px; font-weight:700; margin-bottom:8px;">MITCRAFT 3D Browser</h2>' +
-                        '<p style="font-size:13px; color:#9ca3af; margin-bottom:24px;">접속할 웹사이트 주소를 입력하세요 (기본: https://mitcraft.kro.kr)</p>' +
-                        '<div style="display:flex; gap:10px; background:#111520; padding:6px; border-radius:12px; border:1px solid rgba(255,255,255,0.15);">' +
-                            '<input type="text" id="homeUrlInput" value="https://mitcraft.kro.kr" style="flex:1; background:transparent; border:none; color:#fff; font-size:14px; padding:8px 12px; outline:none;" />' +
-                            '<button id="homeLoadBtn" style="background:#2563eb; color:#fff; border:none; padding:10px 20px; border-radius:8px; font-weight:600; cursor:pointer; font-size:13px; transition:0.2s;">접속하기</button>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>';
-
-            iframeElementWrapper.innerHTML = initialScreenHTML;
+            iframeElementWrapper.innerHTML = `
+                <div style="width:100%; height:100%; background:#090d16; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; font-family:'Pretendard',sans-serif;">
+                    <div style="background:rgba(22, 27, 38, 0.9); padding:40px; border-radius:16px; border:1px solid rgba(255,255,255,0.1); width:520px; box-shadow:0 20px 40px rgba(0,0,0,0.6); text-align:center;">
+                        <div style="width:64px; height:64px; background:#2563eb; border-radius:14px; margin:0 auto 20px; display:flex; align-items:center; justify-content:center; font-size:28px; font-weight:bold; box-shadow:0 10px 20px rgba(37,99,235,0.4);">
+                            M
+                        </div>
+                        <h2 style="font-size:22px; font-weight:700; margin-bottom:8px;">MITCRAFT 3D Browser</h2>
+                        <p style="font-size:13px; color:#9ca3af; margin-bottom:24px;">접속할 웹사이트 주소를 입력하세요 (기본: https://mitcraft.kro.kr)</p>
+                        
+                        <div style="display:flex; gap:10px; background:#111520; padding:6px; border-radius:12px; border:1px solid rgba(255,255,255,0.15);">
+                            <input type="text" id="homeUrlInput" value="https://mitcraft.kro.kr" 
+                                   style="flex:1; background:transparent; border:none; color:#fff; font-size:14px; padding:8px 12px; outline:none;" />
+                            <button id="homeLoadBtn" style="background:#2563eb; color:#fff; border:none; padding:10px 20px; border-radius:8px; font-weight:600; cursor:pointer; font-size:13px; transition:0.2s;">
+                                접속하기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
 
             cssObject = new THREE.CSS3DObject(iframeElementWrapper);
             
@@ -423,7 +296,7 @@
                         if(!url.startsWith('http://') && !url.startsWith('https://')) {
                             url = 'https://' + url;
                         }
-                        iframeElementWrapper.innerHTML = '<iframe id="browserIframe" src="' + url + '" style="width:100%; height:100%; border:none;"></iframe>';
+                        iframeElementWrapper.innerHTML = `<iframe id="browserIframe" src="${url}" style="width:100%; height:100%; border:none;"></iframe>`;
                         showToast(url + "로 접속했습니다.");
                         setInteractMode(true);
                     };
@@ -558,6 +431,7 @@
                 setInteractMode(!isInteractMode);
             });
 
+            // Virtual Keyboard Toggle
             const btnToggleKeyboard = document.getElementById('btnToggleKeyboard');
             const virtualKeyboard = document.getElementById('virtualKeyboard');
             btnToggleKeyboard.addEventListener('click', () => {
@@ -571,199 +445,7 @@
             });
         }
 
-        // Global Shortcut Handler (Left Shift + Enter)
-        function setupShortcutListeners() {
-            window.addEventListener('keydown', (e) => {
-                if (e.code === 'ShiftLeft') {
-                    isLeftShiftPressed = true;
-                }
-
-                if (e.code === 'Enter' && isLeftShiftPressed) {
-                    e.preventDefault();
-                    toggleTypingPractice();
-                }
-            });
-
-            window.addEventListener('keyup', (e) => {
-                if (e.code === 'ShiftLeft') {
-                    isLeftShiftPressed = false;
-                }
-            });
-        }
-
-        // Toggle Typing Practice Overlay
-        function toggleTypingPractice(forceState) {
-            const typingModal = document.getElementById('typingModal');
-            const typingInput = document.getElementById('typingInput');
-            
-            if (forceState !== undefined) {
-                isTypingPracticeActive = forceState;
-            } else {
-                isTypingPracticeActive = !isTypingPracticeActive;
-            }
-
-            if (isTypingPracticeActive) {
-                typingModal.classList.remove('hidden');
-                controls.enabled = false;
-                const cssContainer = document.getElementById('css3d-container');
-                if (cssContainer) cssContainer.style.pointerEvents = "none";
-
-                loadSentence();
-                setTimeout(() => {
-                    typingInput.focus();
-                }, 100);
-
-                showToast("타자 연습 모드 시작 (Left Shift + Enter로 복귀)");
-            } else {
-                typingModal.classList.add('hidden');
-                typingInput.blur();
-                
-                if (!isInteractMode) {
-                    controls.enabled = true;
-                } else {
-                    const cssContainer = document.getElementById('css3d-container');
-                    if (cssContainer) cssContainer.style.pointerEvents = "auto";
-                    focusGameScreen();
-                }
-
-                showToast("타자 연습 종료 - 3D 모드로 복귀");
-            }
-        }
-
-        function setupTypingPracticeEngine() {
-            const typingInput = document.getElementById('typingInput');
-            const btnLangKr = document.getElementById('btnLangKr');
-            const btnLangEn = document.getElementById('btnLangEn');
-            const btnNextSentence = document.getElementById('btnNextSentence');
-            const btnCloseTyping = document.getElementById('btnCloseTyping');
-
-            btnLangKr.addEventListener('click', () => {
-                currentLang = 'kr';
-                btnLangKr.className = "px-4 py-2 rounded-lg text-xs font-bold transition bg-blue-600 text-white shadow-lg shadow-blue-600/30";
-                btnLangEn.className = "px-4 py-2 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800";
-                sentenceIndex = 0;
-                loadSentence();
-            });
-
-            btnLangEn.addEventListener('click', () => {
-                currentLang = 'en';
-                btnLangEn.className = "px-4 py-2 rounded-lg text-xs font-bold transition bg-blue-600 text-white shadow-lg shadow-blue-600/30";
-                btnLangKr.className = "px-4 py-2 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white hover:bg-slate-800";
-                sentenceIndex = 0;
-                loadSentence();
-            });
-
-            btnNextSentence.addEventListener('click', () => {
-                nextSentence();
-            });
-
-            btnCloseTyping.addEventListener('click', () => {
-                toggleTypingPractice(false);
-            });
-
-            typingInput.addEventListener('input', () => {
-                handleTypingInput();
-            });
-
-            typingInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' && !isLeftShiftPressed) {
-                    e.preventDefault();
-                    nextSentence();
-                }
-            });
-        }
-
-        function loadSentence() {
-            const sentences = currentLang === 'kr' ? sentencesKR : sentencesEN;
-            const targetText = sentences[sentenceIndex % sentences.length];
-            const typingInput = document.getElementById('typingInput');
-            const progressSpan = document.getElementById('typingProgress');
-
-            progressSpan.textContent = ((sentenceIndex % sentences.length) + 1) + " / " + sentences.length;
-            typingInput.value = '';
-            startTime = null;
-
-            updateDisplayHighlight(targetText, '');
-            document.getElementById('statCPM').textContent = '0';
-            document.getElementById('statAccuracy').textContent = '100%';
-        }
-
-        function handleTypingInput() {
-            const sentences = currentLang === 'kr' ? sentencesKR : sentencesEN;
-            const targetText = sentences[sentenceIndex % sentences.length];
-            const typingInput = document.getElementById('typingInput');
-            const inputText = typingInput.value;
-
-            if (!startTime && inputText.length > 0) {
-                startTime = new Date();
-            }
-
-            updateDisplayHighlight(targetText, inputText);
-
-            if (startTime && inputText.length > 0) {
-                const now = new Date();
-                const timeDiffSeconds = Math.max((now - startTime) / 1000, 0.5);
-                const cpm = Math.round((inputText.length / timeDiffSeconds) * 60);
-                
-                document.getElementById('statCPM').textContent = cpm;
-                if (cpm > maxCPM) {
-                    maxCPM = cpm;
-                    document.getElementById('statMaxCPM').textContent = maxCPM;
-                }
-
-                let correctChars = 0;
-                for (let i = 0; i < inputText.length; i++) {
-                    if (i < targetText.length && inputText[i] === targetText[i]) {
-                        correctChars++;
-                    }
-                }
-                const accuracy = Math.round((correctChars / inputText.length) * 100);
-                document.getElementById('statAccuracy').textContent = accuracy + "%";
-
-                if (inputText === targetText) {
-                    completedSentencesCount++;
-                    document.getElementById('statCompleted').textContent = completedSentencesCount;
-                    setTimeout(() => {
-                        nextSentence();
-                    }, 300);
-                }
-            }
-        }
-
-        function updateDisplayHighlight(targetText, inputText) {
-            const targetDisplay = document.getElementById('targetDisplay');
-            targetDisplay.innerHTML = '';
-
-            for (let i = 0; i < targetText.length; i++) {
-                const charSpan = document.createElement('span');
-                charSpan.textContent = targetText[i] === ' ' ? ' ' : targetText[i];
-                if (targetText[i] === ' ') {
-                    charSpan.style.display = 'inline-block';
-                    charSpan.style.width = '0.4em';
-                }
-
-                if (i < inputText.length) {
-                    if (inputText[i] === targetText[i]) {
-                        charSpan.className = 'text-emerald-400 font-bold border-b-2 border-emerald-400';
-                    } else {
-                        charSpan.className = 'text-rose-500 font-bold bg-rose-500/20 border-b-2 border-rose-500 rounded-sm';
-                    }
-                } else if (i === inputText.length) {
-                    charSpan.className = 'text-blue-400 bg-blue-500/20 border-b-2 border-blue-400 animate-pulse font-bold';
-                } else {
-                    charSpan.className = 'text-slate-400';
-                }
-
-                targetDisplay.appendChild(charSpan);
-            }
-        }
-
-        function nextSentence() {
-            sentenceIndex++;
-            loadSentence();
-            document.getElementById('typingInput').focus();
-        }
-
+        // Full Interactive Virtual Keyboard Generator
         function setupVirtualKeyboard() {
             const kbContainer = document.getElementById('kbKeys');
             if(!kbContainer) return;
@@ -818,8 +500,7 @@
                 rowDiv.className = 'flex justify-center gap-1.5 mb-1.5';
                 row.forEach(k => {
                     const btn = document.createElement('button');
-                    const btnWidth = k.w || 'w-10';
-                    btn.className = 'h-9 ' + btnWidth + ' bg-slate-800/90 hover:bg-blue-600 text-slate-200 hover:text-white rounded-lg text-xs font-semibold shadow transition flex items-center justify-center border border-white/10 active:scale-95';
+                    btn.className = `h-9 ${k.w || 'w-10'} bg-slate-800/90 hover:bg-blue-600 text-slate-200 hover:text-white rounded-lg text-xs font-semibold shadow transition flex items-center justify-center border border-white/10 active:scale-95`;
                     btn.textContent = k.label;
 
                     const sendKeyAction = (type) => {
@@ -833,7 +514,7 @@
                                     bubbles: true,
                                     cancelable: true
                                 });
-                                iframe.contentWindow.dispatchEvent(ev);
+                                iframe.contentDocument.dispatchEvent(ev) || iframe.contentWindow.dispatchEvent(ev);
                             }
                         } catch(e) {}
                     };
@@ -846,6 +527,7 @@
                         e.preventDefault();
                         sendKeyAction('keyup');
                     });
+                    // Support touch devices
                     btn.addEventListener('touchstart', (e) => {
                         e.preventDefault();
                         sendKeyAction('keydown');
@@ -912,9 +594,6 @@
                     showToast("테마: 미니멀 다크");
                     break;
             }
-            if (isInteractMode) {
-                focusGameScreen();
-            }
         }
 
         function showToast(msg) {
@@ -939,8 +618,6 @@
         function animate() {
             requestAnimationFrame(animate);
 
-            if (isTypingPracticeActive) return;
-
             camera.position.lerp(targetCamPos, 0.05);
             controls.target.lerp(targetCamLookAt, 0.05);
             controls.update();
@@ -954,5 +631,56 @@
             cssRenderer.render(cssScene, camera);
         }
     </script>
+
+    <!-- Floating Bottom Center Controls & Virtual Keyboard Toggle -->
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 pointer-events-auto">
+        
+        <!-- Virtual Keyboard Drawer -->
+        <div id="virtualKeyboard" class="hidden glass-panel p-3 rounded-2xl shadow-2xl border border-white/15 max-w-xl w-full">
+            <div class="flex items-center justify-between pb-2 mb-2 border-b border-white/10 text-xs text-gray-300 font-medium px-1">
+                <span><i class="fa-solid fa-keyboard text-blue-400 mr-1.5"></i> 가상 키보드 (마인크래프트 조작용 WASD / 숫자 / 점프)</span>
+                <span class="text-gray-500">버튼을 클릭하면 게임으로 키가 전달됩니다</span>
+            </div>
+            <div id="kbKeys"></div>
+        </div>
+
+        <!-- Main Toolbar -->
+        <div class="glass-panel px-5 py-2.5 rounded-2xl flex items-center gap-5 shadow-2xl">
+            <!-- View Presets -->
+            <div class="flex items-center gap-2 text-xs text-gray-400 pr-4 border-r border-gray-700/50">
+                <span class="font-medium mr-1">시점:</span>
+                <button data-view="default" class="btn-view active bg-blue-600 text-white px-3 py-1.5 rounded-xl transition font-medium shadow-md shadow-blue-600/30">데스크전체</button>
+                <button data-view="screen" class="btn-view bg-transparent hover:bg-gray-800/60 text-gray-400 hover:text-gray-200 px-3 py-1.5 rounded-xl transition font-medium">화면집중</button>
+                <button data-view="pc" class="btn-view bg-transparent hover:bg-gray-800/60 text-gray-400 hover:text-gray-200 px-3 py-1.5 rounded-xl transition font-medium">PC본체</button>
+            </div>
+
+            <!-- RGB Lighting Theme Selector -->
+            <div class="flex items-center gap-2.5 pr-4 border-r border-gray-700/50">
+                <span class="text-xs text-gray-400 font-medium mr-1">조명:</span>
+                <button data-theme="cyber" class="w-5 h-5 rounded-full bg-gradient-to-tr from-pink-500 to-cyan-400 ring-2 ring-white/20 hover:scale-110 transition shadow-md"></button>
+                <button data-theme="neon" class="w-5 h-5 rounded-full bg-gradient-to-tr from-purple-600 to-blue-500 ring-2 ring-white/20 hover:scale-110 transition shadow-md"></button>
+                <button data-theme="warm" class="w-5 h-5 rounded-full bg-gradient-to-tr from-amber-500 to-orange-400 ring-2 ring-white/20 hover:scale-110 transition shadow-md"></button>
+                <button data-theme="dark" class="w-5 h-5 rounded-full bg-gradient-to-tr from-slate-700 to-slate-900 ring-2 ring-white/20 hover:scale-110 transition shadow-md"></button>
+            </div>
+
+            <!-- Toggle Screen Interact / Virtual Keyboard -->
+            <div class="flex items-center gap-2">
+                <button id="btnToggleKeyboard" class="glass-panel px-3 py-1.5 rounded-xl text-gray-300 hover:text-white text-xs font-medium transition flex items-center gap-1.5 hover:border-blue-500/50">
+                    <i class="fa-solid fa-keyboard text-purple-400"></i>
+                    <span>키보드</span>
+                </button>
+                <button id="btnToggleInteract" class="glass-panel px-3 py-1.5 rounded-xl text-gray-200 hover:text-white text-xs font-medium transition flex items-center gap-2 hover:border-blue-500/50">
+                    <i class="fa-solid fa-computer-mouse text-blue-400"></i>
+                    <span id="interactStatus">화면조작</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed top-6 right-6 z-30 glass-panel px-4 py-2.5 rounded-xl text-xs text-white opacity-0 transition-all duration-300 transform translate-y-[-10px] pointer-events-none flex items-center gap-2">
+        <i class="fa-solid fa-circle-check text-blue-400"></i>
+        <span id="toastMsg">메시지</span>
+    </div>
 </body>
 </html>
